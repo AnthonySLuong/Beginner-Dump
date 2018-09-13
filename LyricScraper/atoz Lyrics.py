@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 # Creating URL
 base = 'https://search.azlyrics.com/search.php?q='
-search = list(input('What song do you want to search for? '))
+search = list(input('Search Artist or song: '))
 for x in range(len(search)):
     if search[x] == ' ':
         search[x] = '+'
