@@ -1,17 +1,11 @@
+import json
 import string
-from list import return_words
 from time import sleep
-
-
-def convert_list(word):
-    word_lst = []
-    for x in word:
-        word_lst.append(x)
-    return word_lst
+from random import randint
 
 
 def convert_x(word):
-    guess_word = convert_list(word)
+    guess_word = list(word)
     x_list = []
     for x in guess_word:
         if x == " ":
@@ -30,17 +24,19 @@ def check_ascii(input):
 
 
 def game():
-    # setups Varible
-    correct_word = convert_list(return_words())
-    guessing = convert_x(correct_word)
+    # Setup Variable
+    ListOfWords = json.loads(open('Words.json').read())
+    Answer_word = ListOfWords[randint(0, len(ListOfWords))]
+    Progress = convert_x(Answer_word)
     guess_count = 10
     lter_count = []
 
+    # Check Amount of guess left & init loop
     while guess_count > 0:
         print("Guess left: %s" % (guess_count))
-        print(' '.join(guessing), )
+        print(' '.join(Progress))
 
-    # check for input
+        # checks for correct input
         guess = input("Enter guess: ")
         while len(guess) > 1:
             guess = input("Enter guess again: ")
@@ -49,28 +45,31 @@ def game():
                 guess = input("Already guessed the letter: ")
         lter_count.append(guess.lower())
 
-    # checks ascii
+        # check Ascci
         while check_ascii(guess) is False:
             guess = input("Please Enter a vaild Letter: ")
 
-    # updates word
+        # Update the blank letters
         check = False
-        for x in range(len(correct_word)):
-            if guess.lower() == correct_word[x].lower():
-                guessing[x] = correct_word[x]
+        for x in range(len(Answer_word)):
+            if guess.lower() == Answer_word[x].lower():
+                Progress[x] = Answer_word[x]
                 check = True
         if check is False:
             guess_count -= 1
+        print(" ")
 
-    # check if won/lost
-        if guessing == correct_word:
+        # Checks if player has won
+        if Progress == Answer_word:
             print("You Win!")
-            print("The word was %s" % (''.join(correct_word)))
+            print("The word was %s" % (Answer_word))
             sleep(2)
             break
+
+    # End game
     else:
         print("You lost! Try again")
-        print("The word was %s" % (''.join(correct_word)))
+        print("The word was %s" % (Answer_word))
         sleep(2)
 
 

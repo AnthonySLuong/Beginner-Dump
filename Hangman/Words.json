@@ -1,6 +1,4 @@
-from random import randint
-
-list_of_words = [
+[
     "ability",
     "able",
     "about",
@@ -561,7 +559,3 @@ list_of_words = [
     "night",
     "no"
 ]
-
-
-def return_words():
-    return (list_of_words[(randint(0, len(list_of_words)))])
